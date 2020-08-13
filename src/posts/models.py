@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from django.db import models
+from django.urls import reverse
 
 
 class Post(models.Model):
@@ -13,3 +14,13 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        """basically you can refer to this URL as
+           as one of the <Post> object method 
+           which can be called through <object_name>.<get_absolute_url>
+        """
+        return reverse("post:detail", kwargs={"id": self.id})
+        """This will take me to <detail> page URL wherein
+           the "id" of the post is passed in the request-object
+        """
