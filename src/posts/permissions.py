@@ -5,6 +5,14 @@ from rest_framework import permissions
 class IsOwnerOrReadOnly(permissions.BasePermission):
     message = "You must be the owner of this object"
 
+    MY_SAFE_METHOD = ['PUT', 'GET']
+
+    def has_permission(self, request, view):
+        if request.method in self.MY_SAFE_METHOD:
+            print("CHECKOUT WHAT MY_SAFE_METHODS ARE", self.MY_SAFE_METHOD)
+            return True
+        return False
+
     def has_object_permission(self, request, view, obj):
         """
             ~~~The conventional method~~~
@@ -29,7 +37,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         """
         # MY_SAFE_METHOD = ['PUT', 'GET']
         # if request.method in MY_SAFE_METHOD:
-        #     print("CHECKOUT WHAT MY_SAFE_METHODS ARE", permissions.SAFE_METHODS)
+        #     print("CHECKOUT WHAT MY_SAFE_METHODS ARE", SAFE_METHODS)
         #     return True
         # else:
         #     # Check permissions for write request
