@@ -37,6 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # third Party
+    'markdown_deux',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
+    # Local apps
     'posts',
     'comments',
     'accounts',

@@ -1,3 +1,9 @@
+Notes:-
+To check whether the slugfield was properly working I need to create post through
+django shell, hence the following commands:-
+Creating a successful post in django-shell ==>
+Post.objects.create(title='New New',content='Break-a-Leg',publish=timezone.now())
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
