@@ -29,7 +29,6 @@ class PostDetailAPIView(RetrieveAPIView):
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializer
     lookup_field = 'slug'
-    # lookup_url_kwarg = "post_detail"
 
 
 class PostUpdateAPIView(RetrieveUpdateAPIView):
