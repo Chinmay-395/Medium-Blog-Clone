@@ -40,9 +40,20 @@ class CommentManager(models.Manager):
 class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              default=1, on_delete=models.CASCADE)
+    """[Explaining how generic-Foriegn-key work]
+        The <content_type> comment-model-field will represent the model 
+            for which the commented is on (Since it is 'GenericForeignKey'
+            it can either refer to Post-Model or Comment-Model.)
+        The <object_id> field represent the Post_id or Comment_id.
+        The <content_object> field refers to the object a 
+            particular "Comment" object is based upon; which will
+            return value "__str__" of that object to which the comment 
+            is based upon (i.e. to a "Post" or "Comment" model)
+    """
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
+    """The <parent> field refers to the comment on which the comment is based upon"""
     parent = models.ForeignKey(
         "self", null=True, blank=True, on_delete=models.CASCADE)
 
@@ -58,7 +69,8 @@ class Comment(models.Model):
         return str(self.user.username)
 
     def __str__(self):
-        return str(self.user.username)
+        # str(self.user.username)
+        return f'{self.content} commented by {str(self.user.username)}'
 
     def get_absolute_url(self):
         return reverse("comments:thread", kwargs={"id": self.id})

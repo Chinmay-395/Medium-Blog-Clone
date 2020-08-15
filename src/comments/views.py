@@ -1,3 +1,58 @@
-from django.shortcuts import render
+from django.db.models import Q
+from rest_framework.filters import (
+    SearchFilter,
+    OrderingFilter,
+)
+from rest_framework.generics import (
+    CreateAPIView,
+    DestroyAPIView,
+    ListAPIView,
+    UpdateAPIView,
+    RetrieveAPIView,
+    RetrieveUpdateAPIView
+)
+from rest_framework.permissions import (
+    AllowAny,
+    IsAuthenticated,
+    IsAdminUser,
+    IsAuthenticatedOrReadOnly,
 
-# Create your views here.
+)
+
+from posts.permissions import IsOwnerOrReadOnly
+from posts.pagination import PostLimitOffsetPagination, PostPageNumberPagination
+
+
+from comments.models import Comment
+
+
+from .serializers import (
+    CommentSerializer,
+    CommentDetailSerializer
+)
+
+
+class CommentDetailAPIView(RetrieveAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentDetailSerializer
+    lookup_field = 'pk'
+    # lookup_url_kwarg = "abc"
+
+
+class CommentListAPIView(ListAPIView):
+    serializer_class = CommentSerializer
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ['content', 'user__first_name']
+    pagination_class = PostPageNumberPagination  # PageNumberPagination
+
+    def get_queryset(self, *args, **kwargs):
+        # queryset_list = super(PostListAPIView, self).get_queryset(*args, **kwargs)
+        queryset_list = Comment.objects.all()  # filter(user=self.request.user)
+        query = self.request.GET.get("q")
+        if query:
+            queryset_list = queryset_list.filter(
+                Q(content__icontains=query) |
+                Q(user__first_name__icontains=query) |
+                Q(user__last_name__icontains=query)
+            ).distinct()
+        return queryset_list

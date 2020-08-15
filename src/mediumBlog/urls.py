@@ -9,7 +9,7 @@ urlpatterns = [
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     # , namespace='post-api'
     path('posts/', include('posts.urls', namespace='post-api')),
-    # path('comments/', include('comments.urls')),
+    path('comments/', include('comments.urls', namespace='comment-api')),
 ]
 
 if settings.DEBUG:
