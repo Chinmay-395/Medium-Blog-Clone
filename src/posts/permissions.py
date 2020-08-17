@@ -4,15 +4,15 @@ from rest_framework import permissions
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     message = "You must be the owner of this object"
+    """This has been commented since it hinders the delete api for comments"""
+    # MY_SAFE_METHOD = ['PUT', 'GET', 'POST']
 
-    MY_SAFE_METHOD = ['PUT', 'GET']
-
-    def has_permission(self, request, view):
-        print("-----$$$$$$-------THE USER WHO IS REQUESTING is", request.user)
-        if request.method in self.MY_SAFE_METHOD:
-            print("CHECKOUT WHAT MY_SAFE_METHODS ARE", self.MY_SAFE_METHOD)
-            return True
-        return False
+    # def has_permission(self, request, view):
+    #     print("-----$$$$$$-------THE USER WHO IS REQUESTING is", request.user)
+    #     if request.method in self.MY_SAFE_METHOD:
+    #         print("CHECKOUT WHAT MY_SAFE_METHODS ARE", self.MY_SAFE_METHOD)
+    #         return True
+    #     return False
 
     def has_object_permission(self, request, view, obj):
         """
