@@ -1,10 +1,10 @@
 from django.contrib import admin
-
+from django_summernote.admin import SummernoteModelAdmin
 # Register your models here.
 from .models import Post
 
 
-class PostModelAdmin(admin.ModelAdmin):
+class PostModelAdmin(SummernoteModelAdmin):
     list_display = ["title", "updated", "timestamp"]
     list_display_links = ["updated"]
     list_editable = ["title"]
@@ -12,8 +12,17 @@ class PostModelAdmin(admin.ModelAdmin):
 
     search_fields = ["title", "content"]
 
+    summernote_fields = ('content',)
+
     class Meta:
         model = Post
 
 
 admin.site.register(Post, PostModelAdmin)
+
+
+# class PostAdmin(SummernoteModelAdmin):
+#     summernote_fields = ('content',)
+
+
+# admin.site.register(Post, PostAdmin)

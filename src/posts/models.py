@@ -33,7 +33,8 @@ def upload_location(instance, filename):
     PostModel = instance.__class__
     new_id = PostModel.objects.order_by("id").last().id + 1
     """
-    instance.__class__ gets the model Post. We must use this method because the model is defined below.
+    instance.__class__ gets the model Post. We must use this method because 
+    the model is defined below.
     Then create a queryset ordered by the "id"s of each object, 
     Then we get the last object in the queryset with `.last()`
     Which will give us the most recently created Model instance
