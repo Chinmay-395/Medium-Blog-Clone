@@ -1,41 +1,55 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import {useSelector, useDispatch} from "react-redux"
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { baseUrl } from "../baseUrl";
-export default function Blog() {
-  const [blogs, setBlogs] = useState([]);
-  // const [featuredBlog, setFeaturedBlog] = useState([]);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const res = await axios.get(
-  //         `${process.env.REACT_APP_API_URL}/api/blog/featured`
-  //       );
-  //       setFeaturedBlog(res.data[0]);
-  //     } catch (err) {}
-  //   };
+import { 
+  Button,
+  Card, 
+  CardImg, 
+  CardText, 
+  CardBody,
+  CardTitle, 
+  CardSubtitle } from "reactstrap";
+import {fetchingOfAllBlogPost } from "../redux/blog/blogActions"
 
-  //   fetchData();
-  // }, []);
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const res = await axios.get(`${baseUrl}/posts/`);
-        console.log("This ran");
-        console.log(res.data);
-        setBlogs(res.data);
-      } catch (err) {}
-    };
-    fetchBlogs();
-  }, []);
+import {Loading} from "./LoadingComponent"
 
-  const capitalizeFirstLetter = (word) => {
-    if (word) return word.charAt(0).toUpperCase() + word.slice(1);
-    else return "";
-  };
 
-  const getBlogs = () => {};
 
+
+export const BlogCardComponent = (props) => {
+  console.log("THE PROPS",props)
+  if(props.blogs_array!=null){
+      return(
+      <>
+      {props.blogs_array.map((post)=>{
+        return(
+          <Card key={post.id}>
+        {/* <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" /> */}
+        <CardBody>
+          <CardTitle tag="h5">{post.title}</CardTitle>
+          <CardSubtitle tag="h6" className="mb-2 text-muted">Authored by: <span>{post.user}</span></CardSubtitle>
+          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+          <Button>Button</Button>
+          <Link to={{pathname:`blog/${post.id}`,state:{post}}}>DETAILS</Link>
+        </CardBody>
+      </Card>
+        )
+      })}
+      </>
+    )
+  }
+  return(
+    <></>
+  )
+};
+
+function Blog({fetchBlogPosts,blog}) {
+  useEffect(()=>{
+    console.log("Fetching blog posts using useEffect.")
+    fetchBlogPosts();
+  },[fetchBlogPosts])
+  // console.log("Fetching blog",props)
   return (
     <div className="container mt-3">
       <div className="nav-scroller py-1 mb-2">
@@ -78,6 +92,25 @@ export default function Blog() {
           </Link>
         </nav>
       </div>
+      {/* <button onClick={fetch_func}>Get the blogs</button> */}
+      {(blog.isLoading)?<Loading/>:
+      <>
+      <BlogCardComponent blogs_array={blog.blog_data.results}/>
+      </>}
+      
     </div>
   );
 }
+
+const mapStateToProps = state =>{
+  return{
+    blog: state.blog
+  }
+}
+const mapDispatchToProps = dispatch =>{
+  return{
+    fetchBlogPosts: ()=>{dispatch(fetchingOfAllBlogPost())}
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Blog)

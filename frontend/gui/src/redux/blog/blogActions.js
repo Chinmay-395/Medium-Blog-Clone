@@ -53,10 +53,13 @@ export const blogUpdate = (data) => {
 // CRUD functionality
 
 //this function will fetch all the blog posts
-export const fetchingOfAllBlogPost = () => {
+export const fetchingOfAllBlogPost = () => dispatch => {
   dispatch(blogStart());
   axios.get(`http://127.0.0.1:8000/posts/`)
-    .then(res => dispatch(blogFetched(res.data)))
+    .then(res => {
+      console.log("response from the server \n",res.data)
+      dispatch(blogFetched(res.data))
+    })
     .catch(error => dispatch(blogFail(error.message)))
 }
 
@@ -85,7 +88,10 @@ export const ReadBlogPost = (url) => (dispatch) => {
   dispatch(blogStart())
   let detailBlog = async () =>{
     await axios.get(url)
-    .then(res=>dispatch(res.data))
+    .then(res=>{
+      console.log("THE BLOG DETAILS \n",res.data)
+      dispatch(blogDetail(res.data))
+    })
     .catch(error =>dispatch(blogFail(error.message)))
   }
   detailBlog()

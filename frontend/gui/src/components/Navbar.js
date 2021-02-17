@@ -1,9 +1,18 @@
-import React,{useState} from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
+import React,{useState,useEffect} from "react";
+import { Link, 
+ NavLink
+ } from "react-router-dom";
+import { 
+Button, Modal, ModalHeader, ModalBody,  
+Form, FormGroup, Label, Input,Collapse, Navbar,
+NavbarToggler,NavbarBrand, Nav, NavItem,//NavLink
+} from 'reactstrap';
+//react-redux imports
 import {connect} from "react-redux";
 import {authLogin, authLogout } from "../redux/auth/authActions"
-
+//custom imports
+import { toast } from 'react-toastify';
+import icon from "../assets/medium-blog-icons.svg"
 
 function LoginForm({modal,toggle,login_func}) {
   const [details, setDetails] = useState({username:"", email: "", password: ""})
@@ -59,24 +68,103 @@ const NavBar = (props) => {
   
   const toggle = () => setModal(!modal);
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleNavBar = () => setIsOpen(!isOpen);
+
   const login_func = (details) => {
     console.log("LOGGED IN")
     console.log(details)
     props.login(details.username, details.email, details.password)
-  }
+    }
+
   const logout = () =>{
     console.log("THE USER LOGGED OUT")
     props.authLogout()
+    toast.info('YOU LOGGED OUT', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   }
   console.log("THE PROPS",props)
 
   return (
-    <>
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <Link className="navbar-brand" to="/">
-        Medium Blog Clone
-      </Link>
-      <button
+    <div className="container mt-3">
+    <Navbar style={{backgroundColor:"#00203FFF"}} expand="md">
+      {/* navbar-light  */}
+      <NavbarBrand href="/" >
+        <img 
+          style={{ 
+            width: "35%",
+            maxWidth:"100px", 
+            height: "auto",//"100px", 
+            display: "block", 
+          }} 
+          src={icon} 
+          alt="Medium-Blog-Clone" 
+        />
+      </NavbarBrand>
+      <NavbarToggler onClick={toggleNavBar} />
+      <Collapse isOpen={isOpen} navbar>
+        <Nav className="mr-auto" navbar>
+          <NavItem>
+            <NavLink to="/" className="nav-link" style={{color:"#ADEFD1FF"}}>
+              {/* <Link to="/"> */}
+              <span className="fa fa-home fa-lg" >Home</span> 
+              {/* #ADEFD1FF  #00203FFF */}
+            {/* </Link> */}
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink to="/blog" className="nav-link" style={{color:"#ADEFD1FF"}}>
+              <span className="fa fa-blog fa-lg" >Blog</span> 
+            </NavLink>
+          </NavItem>
+          
+        </Nav>
+        {/* Assign to ml-auto for authentication on the left side */}
+        <Nav className="ml-auto" navbar>
+          {(props.auth.token!==null && props.auth.token!==undefined)?
+            <>
+            <Button color="warning" onClick={logout}>Logout</Button>
+            </>
+          :<>
+            <NavItem>
+              <Button color="danger" onClick={toggle}>Login</Button>
+            </NavItem>
+            <LoginForm modal={modal} toggle={toggle} login_func={login_func}/>
+          </>
+          }
+        </Nav>
+      </Collapse>
+      
+    </Navbar>
+    </div>
+  );
+};
+
+const mapStateToProps = state => {
+  return{
+    auth: state.auth
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return{
+    login: (username,email, password)=>dispatch(authLogin(username,email, password)),
+    authLogout: ()=>dispatch(authLogout())
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(NavBar);
+
+
+/*<button
         className="navbar-toggler"
         type="button"
         data-toggle="collapse"
@@ -99,35 +187,25 @@ const NavBar = (props) => {
               Blog
             </NavLink>
           </li>
-          {(props.auth.token!==null && props.auth.token!==undefined)?
-            <>
-            <Button color="warning" onClick={logout}>Logout</Button>
-            </>
-          :<>
-            <li className="nav-item">
-              <Button color="danger" onClick={toggle}>Toggle Modal</Button>
-            </li>
-            <LoginForm modal={modal} toggle={toggle} login_func={login_func}/>
-          </>
-          }
+          
         </ul>
       </div>
-    </nav>
-    </>
-  );
-};
+      */
 
-const mapStateToProps = state => {
-  return{
-    auth: state.auth
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return{
-    login: (username,email, password)=>dispatch(authLogin(username,email, password)),
-    authLogout: ()=>dispatch(authLogout())
-  }
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(NavBar);
+/** 
+ * 
+  // useEffect(() => {
+  //   if(props.auth.token!==null && props.auth.error==null){
+  //     console.log("THE PROPS CHECK",props)
+  //     toast.success("You just logged in",{
+  //       position: "top-right",
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //     });
+  //   }
+  // }, [])
+*/
