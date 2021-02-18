@@ -7,6 +7,8 @@ import {
   CardTitle,
   CardSubtitle,
 } from "reactstrap";
+import ReactMarkdown from "react-markdown";
+
 export const BlogDetailComponent = (props) => {
   console.log("COMPONENT", props);
   return (
@@ -19,7 +21,15 @@ export const BlogDetailComponent = (props) => {
             <CardSubtitle tag="h6" className="mb-2 text-muted">
               Author: {props.details.user}
             </CardSubtitle>
-            <CardText>{props.details.content}</CardText>
+            <CardText>
+              {/* {props.details.content} */}
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: `${props.details.html}`,
+                }}
+              />
+            </CardText>
+            {/* <ReactMarkdown source={markdown} /> */}
           </CardBody>
         </Card>
       ) : (
