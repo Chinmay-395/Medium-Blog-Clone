@@ -1,54 +1,76 @@
 import React, { useState, useEffect } from "react";
-import {useSelector, useDispatch} from "react-redux"
+import { useSelector, useDispatch } from "react-redux";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { 
+import {
   Button,
-  Card, 
-  CardImg, 
-  CardText, 
+  Card,
+  CardImg,
+  CardText,
   CardBody,
-  CardTitle, 
-  CardSubtitle } from "reactstrap";
-import {fetchingOfAllBlogPost } from "../redux/blog/blogActions"
+  CardTitle,
+  CardSubtitle,
+} from "reactstrap";
+import { fetchingOfAllBlogPost } from "../redux/blog/blogActions";
 
-import {Loading} from "./LoadingComponent"
-
-
-
+import { Loading } from "./LoadingComponent";
 
 export const BlogCardComponent = (props) => {
-  console.log("THE PROPS",props)
-  if(props.blogs_array!=null){
-      return(
-      <>
-      {props.blogs_array.map((post)=>{
-        return(
-          <Card key={post.id}>
-        {/* <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" /> */}
-        <CardBody>
-          <CardTitle tag="h5">{post.title}</CardTitle>
-          <CardSubtitle tag="h6" className="mb-2 text-muted">Authored by: <span>{post.user}</span></CardSubtitle>
-          <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-          <Button>Button</Button>
-          <Link to={{pathname:`blog/${post.id}`,state:{post}}}>DETAILS</Link>
-        </CardBody>
-      </Card>
-        )
-      })}
-      </>
-    )
+  console.log("THE PROPS", props);
+  function isScrolling() {
+    if (
+      window.innerHeight + document.documentElement.scrollTop !==
+      document.documentElement.offsetHeight
+    ) {
+      return;
+    } else {
+      console.log("scrolling down");
+    }
   }
-  return(
-    <></>
-  )
+  useEffect(() => {
+    window.addEventListener("scroll", function () {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        console.log("you're at the bottom of the page");
+        // Show loading spinner and make fetch request to api
+      }
+    });
+  });
+  if (props.blogs_array != null) {
+    return (
+      <>
+        {props.blogs_array.map((post) => {
+          return (
+            <Card key={post.id}>
+              {/* <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" /> */}
+              <CardBody>
+                <CardTitle tag="h5">{post.title}</CardTitle>
+                <CardSubtitle tag="h6" className="mb-2 text-muted">
+                  Authored by: <span>{post.user}</span>
+                </CardSubtitle>
+                <CardText>
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </CardText>
+                <Button>Button</Button>
+                <Link to={{ pathname: `blog/${post.id}`, state: { post } }}>
+                  DETAILS
+                </Link>
+              </CardBody>
+            </Card>
+          );
+        })}
+      </>
+    );
+  }
+  return <></>;
 };
 
-function Blog({fetchBlogPosts,blog}) {
-  useEffect(()=>{
-    console.log("Fetching blog posts using useEffect.")
+function Blog({ fetchBlogPosts, blog }) {
+  useEffect(() => {
+    console.log("Fetching blog posts using useEffect.");
     fetchBlogPosts();
-  },[fetchBlogPosts])
+  }, [fetchBlogPosts]);
+
   // console.log("Fetching blog",props)
   return (
     <div className="container mt-3">
@@ -93,24 +115,28 @@ function Blog({fetchBlogPosts,blog}) {
         </nav>
       </div>
       {/* <button onClick={fetch_func}>Get the blogs</button> */}
-      {(blog.isLoading)?<Loading/>:
-      <>
-      <BlogCardComponent blogs_array={blog.blog_data.results}/>
-      </>}
-      
+      {blog.isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <BlogCardComponent blogs_array={blog.blog_data.results} />
+        </>
+      )}
     </div>
   );
 }
 
-const mapStateToProps = state =>{
-  return{
-    blog: state.blog
-  }
-}
-const mapDispatchToProps = dispatch =>{
-  return{
-    fetchBlogPosts: ()=>{dispatch(fetchingOfAllBlogPost())}
-  }
-}
+const mapStateToProps = (state) => {
+  return {
+    blog: state.blog,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchBlogPosts: () => {
+      dispatch(fetchingOfAllBlogPost());
+    },
+  };
+};
 
-export default connect(mapStateToProps,mapDispatchToProps)(Blog)
+export default connect(mapStateToProps, mapDispatchToProps)(Blog);
