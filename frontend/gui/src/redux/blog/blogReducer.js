@@ -11,7 +11,6 @@ const initialState = {
   isLoading: true,
   errMess: null,
   blog_data: [],
-  post_data: null,
 };
 const Blog_Data_reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -36,14 +35,14 @@ const Blog_Data_reducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         errMess: null,
-        post_data: action.payload,
+        blog_data: action.payload,
       };
     case UPDATE_BLOG:
       return {
         ...state,
         isLoading: false,
         errMess: null,
-        post_data: action.payload,
+        blog_data: action.payload,
       };
     case BLOG_FAILED:
       return {
