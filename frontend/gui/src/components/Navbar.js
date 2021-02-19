@@ -160,7 +160,13 @@ const NavBar = (props) => {
             alt="Medium-Blog-Clone"
           />
         </NavbarBrand>
-        <NavbarToggler onClick={toggleNavBar} />
+        <NavbarToggler
+          style={{ color: "#ADEFD1FF" }}
+          className="custom-toggler"
+          onClick={toggleNavBar}
+        >
+          <span className="fa fa-bars"></span>
+        </NavbarToggler>
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>

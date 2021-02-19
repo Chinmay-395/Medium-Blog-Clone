@@ -88,35 +88,3 @@ export default function BlogDetail(props) {
     </div>
   );
 }
-
-/**
- * useEffect(() => {
-    async function fetchData() {
-      const res = await fetch(url);
-      const json = await res.json();
-      setPostDetails(json);
-    }
-    fetchData();
-  }, [url, setPostDetails]);
- * 
- * 
- * 
- * 
- * <button onClick={() => dispatch(ReadBlogPost(url))}>Click</button>
- *   const dispatch = useDispatch();
-  const blogDetail = useSelector((state) => state.blog);
-    useEffect(() => {
-    dispatch(ReadBlogPost(url));
-  }, [dispatch, url]);
- * const ACTIONS = {
-  FETCH_DETAILS: "FETCH_DETAILS", //we get both posts as well as comments
-  POST_COMMENT: "POST_COMMENT",
-};
- * function reducer(state, action) {
-  switch (
-    action.type
-    // case
-  ) {
-  }
-}
- */

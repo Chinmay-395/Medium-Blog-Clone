@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   Button,
   Card,
-  CardImg,
   CardText,
   CardBody,
   CardTitle,
@@ -16,32 +15,15 @@ import { fetchingOfAllBlogPost } from "../redux/blog/blogActions";
 import { Loading } from "./LoadingComponent";
 
 export const BlogCardComponent = (props) => {
-  console.log("THE PROPS", props);
-  function isScrolling() {
-    if (
-      window.innerHeight + document.documentElement.scrollTop !==
-      document.documentElement.offsetHeight
-    ) {
-      return;
-    } else {
-      console.log("scrolling down");
-    }
-  }
-  useEffect(() => {
-    window.addEventListener("scroll", function () {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-        console.log("you're at the bottom of the page");
-        // Show loading spinner and make fetch request to api
-      }
-    });
-  });
-  if (props.blogs_array != null) {
+  console.log("PROPS BlogCardComponent", props);
+
+  console.log("PROPS BLOG", props.blogs_array);
+  if (props.blogs_array !== null) {
     return (
       <>
         {props.blogs_array.map((post) => {
           return (
             <Card key={post.id}>
-              {/* <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" /> */}
               <CardBody>
                 <CardTitle tag="h5">{post.title}</CardTitle>
                 <CardSubtitle tag="h6" className="mb-2 text-muted">
@@ -59,6 +41,20 @@ export const BlogCardComponent = (props) => {
             </Card>
           );
         })}
+        {
+          <>
+            {console.log(
+              "THE FUNCTION",
+              props.fetchBlog,
+              props.next,
+              props.previous
+            )}
+            <Button onClick={() => props.fetchBlog(props.next)}>Next</Button>
+            <Button onClick={() => props.fetchBlog(props.previous)}>
+              previous
+            </Button>
+          </>
+        }
       </>
     );
   }
@@ -68,10 +64,9 @@ export const BlogCardComponent = (props) => {
 function Blog({ fetchBlogPosts, blog }) {
   useEffect(() => {
     console.log("Fetching blog posts using useEffect.");
-    fetchBlogPosts();
+    fetchBlogPosts(`http://127.0.0.1:8000/posts/`);
   }, [fetchBlogPosts]);
-
-  // console.log("Fetching blog",props)
+  console.log("-----------------------------------", blog);
   return (
     <div className="container mt-3">
       <div className="nav-scroller py-1 mb-2">
@@ -119,7 +114,12 @@ function Blog({ fetchBlogPosts, blog }) {
         <Loading />
       ) : (
         <>
-          <BlogCardComponent blogs_array={blog.blog_data.results} />
+          <BlogCardComponent
+            blogs_array={blog.blog_data.results}
+            next={blog.blog_data.next}
+            previous={blog.blog_data.previous}
+            fetchBlog={fetchBlogPosts}
+          />
         </>
       )}
     </div>
@@ -133,10 +133,24 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchBlogPosts: () => {
-      dispatch(fetchingOfAllBlogPost());
+    fetchBlogPosts: (url) => {
+      dispatch(fetchingOfAllBlogPost(url));
     },
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Blog);
+
+/* inside the blog-card-component
+function isScrolling() {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      console.log("THE BOTTOM");
+    } else {
+      console.log("scrolling down");
+    }
+  }
+  useEffect(() => {
+    window.addEventListener("scroll", isScrolling);
+    return window.removeEventListener("scroll", isScrolling);
+  }, []);
+  */

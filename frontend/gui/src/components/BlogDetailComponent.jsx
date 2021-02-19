@@ -10,7 +10,7 @@ import {
 import ReactMarkdown from "react-markdown";
 
 export const BlogDetailComponent = (props) => {
-  console.log("COMPONENT", props);
+  console.log("All the posts", props);
   return (
     <>
       {props.details ? (
