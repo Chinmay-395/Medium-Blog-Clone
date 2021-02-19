@@ -102,6 +102,27 @@ const NavBar = (props) => {
 
   const toggleNavBar = () => setIsOpen(!isOpen);
 
+  console.log("THE PROPS IN NAVBAR COMPONENT", props);
+  const [auth, setAuth] = useState(false);
+
+  useEffect(() => {
+    if (
+      props.auth.token !== null &&
+      localStorage.getItem("token") === props.auth.token
+    ) {
+      setAuth(true);
+      toast.info("YOU LOGGED In", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, [setAuth, props.auth.token]);
+
   const login_func = (details) => {
     console.log("LOGGED IN");
     console.log(details);
@@ -111,6 +132,7 @@ const NavBar = (props) => {
   const logout = () => {
     console.log("THE USER LOGGED OUT");
     props.authLogout();
+    setAuth(false);
     toast.info("YOU LOGGED OUT", {
       position: "top-right",
       autoClose: 5000,
@@ -147,10 +169,7 @@ const NavBar = (props) => {
                 className="nav-link"
                 style={{ color: "#ADEFD1FF" }}
               >
-                {/* <Link to="/"> */}
                 <span className="fa fa-home fa-lg"></span>
-                {/* #ADEFD1FF  #00203FFF */}
-                {/* </Link> */}
               </NavLink>
             </NavItem>
             <NavItem>
@@ -165,7 +184,7 @@ const NavBar = (props) => {
           </Nav>
           {/* Assign to ml-auto for authentication on the left side */}
           <Nav className="ml-auto" navbar>
-            {props.auth.token !== null && props.auth.token !== undefined ? (
+            {auth ? (
               <>
                 <NavItem>
                   <NavLink
@@ -226,49 +245,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
-
-/*<button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav">
-          <li className="nav-item active">
-            <NavLink className="nav-link" exact to="/">
-              Home <span className="sr-only">(current)</span>
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" exact to="/blog">
-              Blog
-            </NavLink>
-          </li>
-          
-        </ul>
-      </div>
-      */
-
-/** 
- * 
-  // useEffect(() => {
-  //   if(props.auth.token!==null && props.auth.error==null){
-  //     console.log("THE PROPS CHECK",props)
-  //     toast.success("You just logged in",{
-  //       position: "top-right",
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //     });
-  //   }
-  // }, [])
-*/
