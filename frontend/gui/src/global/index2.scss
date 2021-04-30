@@ -1,3 +1,6 @@
+.chat_component_box {
+  background-color: #eaeef3;
+}
 // THE COPIED CSS
 .block-61 {
   --block-background: white;
@@ -14,37 +17,17 @@
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.09);
   display: flex;
   flex-direction: column;
-  height: 100%;
+  // height: 100%;
+  height: 6.5rem;
   width: 100%;
+  margin: 2px;
 }
 
-// .testimonial-card-1__paragraph {
-//   font-size: 0.95rem;
-//   opacity: 0.9;
-//   line-height: 1.7;
-//   flex-grow: 1;
-//   padding-bottom: 1.5rem;
-// }
-
-// .testimonial-card-1__quote-symbol {
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   width: 50px;
-//   height: 50px;
-//   background: var(--gradient-primary, --primary);
-//   color: var(--primary-invert);
-//   font-size: 1.3rem;
-//   border-radius: 10rem;
-//   position: absolute;
-//   top: -25px;
-//   left: 30px;
-// }
 //The details inside the div of the .testimonial-card-1
 .block-61-person {
   display: flex;
   align-items: center;
-  margin-top: -1rem;
+  margin-top: -1.3rem;
 }
 //the image of the avatar should be circular
 .block-61-person__avatar {
