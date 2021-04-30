@@ -23,7 +23,6 @@ const ACTIONS = {
   //blog post detail comes with comments
   FETCH_SUCCESS: "FETCH_SUCCESS",
   FETCH_ERROR: "FETCH_ERROR",
-  POST_COMMENT: "POST_COMMENT",
 };
 //accepts current state and the action it needs to perform
 //initial state
@@ -46,7 +45,6 @@ function reducer(state = initialState, action) {
         error: action.payload,
         post: {},
       };
-
     default:
       // ⚠ Rather than returning the same state return an error
       console.log("IT WENT TO DEFAULT");
@@ -55,7 +53,6 @@ function reducer(state = initialState, action) {
 }
 
 export default function BlogDetail(props) {
-  const globalState = useSelector((state) => state.blog);
   //check if the user is comming from the blog-list view
   const url = props.location.state.post.url;
   const [state, dispatch] = useReducer(reducer, []);
@@ -70,13 +67,10 @@ export default function BlogDetail(props) {
         dispatch({ type: ACTIONS.FETCH_ERROR, payload: err.data })
       );
   }, [url]);
-  console.log("POST-DETAILS FROM Reducer-Hook", state);
-  console.log("THE GLOBAL STATE OF REDUX", globalState);
+
   return (
     <div className="container">
       <h1>Blog Detail Component</h1>
-      {/* { ? "LOADING..." : console.log(state)}
-      { ? state.error : null} */}
 
       {state.loading ? (
         <Loading />

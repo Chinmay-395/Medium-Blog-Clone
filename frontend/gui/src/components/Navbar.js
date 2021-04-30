@@ -40,7 +40,7 @@ function LoginForm({ modal, toggle, login_func }) {
         <ModalBody>
           <Form onSubmit={submitHandler}>
             <FormGroup>
-              <Label for="name">Email</Label>
+              <Label for="name">Username</Label>
               <Input
                 type="name"
                 name="name"

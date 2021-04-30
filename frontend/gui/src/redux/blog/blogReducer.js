@@ -15,7 +15,12 @@ const initialState = {
 const Blog_Data_reducer = (state = initialState, action) => {
   switch (action.type) {
     case BLOG_START:
-      return { ...state, isLoading: true, errMess: null, blog_data: null };
+      return {
+        ...state,
+        isLoading: true,
+        errMess: null,
+        blog_data: null,
+      };
     case FETCH_BLOG:
       return {
         ...state,

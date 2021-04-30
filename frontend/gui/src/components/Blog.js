@@ -43,16 +43,18 @@ export const BlogCardComponent = (props) => {
         })}
         {
           <>
-            {console.log(
-              "THE FUNCTION",
-              props.fetchBlog,
-              props.next,
-              props.previous
+            {props.next !== null ? (
+              <Button onClick={() => props.fetchBlog(props.next)}>Next</Button>
+            ) : (
+              <></>
             )}
-            <Button onClick={() => props.fetchBlog(props.next)}>Next</Button>
-            <Button onClick={() => props.fetchBlog(props.previous)}>
-              previous
-            </Button>
+            {props.previous !== null ? (
+              <Button onClick={() => props.fetchBlog(props.previous)}>
+                previous
+              </Button>
+            ) : (
+              <></>
+            )}
           </>
         }
       </>
