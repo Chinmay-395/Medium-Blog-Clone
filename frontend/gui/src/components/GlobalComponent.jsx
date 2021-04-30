@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Card, Button, Row, Col } from "reactstrap";
+import { Button } from "reactstrap";
 import "../global/index2.scss";
 import shika from "../global/shikamaru.png";
 
@@ -121,12 +121,24 @@ function GlobalComponent() {
             />
           </div>
           <div>
-            <p>
+            <p style={{ paddingTop: "0.5rem" }}>
               <span>MESSAGING</span>
             </p>
           </div>
-          <div style={{ paddingRight: "1rem" }}>
-            <Button onClick={() => setIsOpen(!isOpen)}>click</Button>
+          <div style={{ padding: "0 1rem 1rem 0" }}>
+            {isOpen === false ? (
+              <Button
+                className="fa fa-chevron-circle-up"
+                onClick={() => setIsOpen(!isOpen)}
+                style={{ backgroundColor: "#74d5de", borderRadius: "10rem" }}
+              ></Button>
+            ) : (
+              <Button
+                className="fa fa-chevron-circle-down"
+                onClick={() => setIsOpen(!isOpen)}
+                style={{ backgroundColor: "#74d5de", borderRadius: "10rem" }}
+              ></Button>
+            )}
           </div>
         </div>
         {isOpen && (
