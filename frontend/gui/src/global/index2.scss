@@ -1,74 +1,69 @@
-// .box {
-//   position: absolute;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   background: #fff;
-//   box-shadow: 10px 10px 10px 0 rgba(86, 91, 119, 0.4);
-//   padding: 50px;
-//   width: 70%;
-//   border-radius: 10px;
-//   font-size: 15px;
-//   line-height: 30px;
-//   cursor: pointer;
+// THE COPIED CSS
+.block-61 {
+  --block-background: white;
+  --block-text-color: var(--text-primary);
+  background: var(--block-background);
+  color: var(--block-text-color);
+}
 
-//   &:before {
-//     content: "";
-//     position: absolute;
-//     top: 50%;
-//     right: -30px;
-//     margin-top: -25px;
-//     background: #fff;
-//     // background-image: url(https://image.flaticon.com/icons/svg/56/56809.svg);
-//     background-size: 25px;
-//     background-repeat: no-repeat;
-//     border-radius: 50%;
-//     width: 60px;
-//     height: 60px;
-//     // transform: scale(0) translateY(-50%);
-//     // transition: transform 0.4s;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     // background-position-x: 21px;
-//     // background-position-y: 18px;
-//   }
+.testimonial-card-1 {
+  padding: 3rem 2.2rem 2.2rem 2.2rem;
+  border-radius: 5px;
+  position: relative;
+  background: var(--block-background);
+  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.09);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
 
-//   .box-header,
-//   .box-body {
-//     color: #fff;
-//   }
+// .testimonial-card-1__paragraph {
+//   font-size: 0.95rem;
+//   opacity: 0.9;
+//   line-height: 1.7;
+//   flex-grow: 1;
+//   padding-bottom: 1.5rem;
 // }
 
-// .box-header {
-//   font-size: 18px;
-//   font-weight: 600;
-//   margin-bottom: 20px;
+// .testimonial-card-1__quote-symbol {
 //   display: flex;
 //   align-items: center;
-//   text-transform: uppercase;
-
-//   img {
-//     border-radius: 50%;
-//     margin-right: 20px;
-//   }
+//   justify-content: center;
+//   width: 50px;
+//   height: 50px;
+//   background: var(--gradient-primary, --primary);
+//   color: var(--primary-invert);
+//   font-size: 1.3rem;
+//   border-radius: 10rem;
+//   position: absolute;
+//   top: -25px;
+//   left: 30px;
 // }
-// // }
-.box {
-  .box-header {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    text-transform: uppercase;
-    position: absolute;
-    top: 50%;
-    left: 50%;
+//The details inside the div of the .testimonial-card-1
+.block-61-person {
+  display: flex;
+  align-items: center;
+  margin-top: -1rem;
+}
+//the image of the avatar should be circular
+.block-61-person__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 10rem;
+}
 
-    img {
-      border-radius: 50%;
-      margin-right: 200px;
-    }
-  }
+// .block-61-person__rating {
+//   font-size: 0.75rem;
+//   color: #ffe200;
+// }
+
+.block-61-person__name {
+  font-size: 0.87rem;
+  font-weight: 600;
+}
+
+.block-61-person__info {
+  font-size: 0.87rem;
+  opacity: 0.8;
 }
