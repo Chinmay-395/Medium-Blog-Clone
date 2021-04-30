@@ -17,7 +17,7 @@ urlpatterns = [
 
 """ [How to write request of each comments]
     1) To Create a new comment on a post
-        --> http://127.0.0.1:8000/comments/create/type=post&slug=<slug_field_in_post> 
+        --> http://127.0.0.1:8000/comments/create/?type=post&slug=<slug_field_in_post> 
     2) To Edit/Delete the comment --> http://127.0.0.1:8000/comments/<comment_id>/edit/
         
 """
