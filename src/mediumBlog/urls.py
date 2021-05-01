@@ -12,6 +12,7 @@ urlpatterns = [
     # , namespace='post-api'
     path('posts/', include('posts.urls', namespace='post-api')),
     path('comments/', include('comments.urls', namespace='comment-api')),
+    path('accounts/', include('accounts.urls', namespace='account-api')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # urlpatterns += [re_path(r'^.*',

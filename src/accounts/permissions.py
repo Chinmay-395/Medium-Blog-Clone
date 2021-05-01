@@ -29,7 +29,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
         else:
             # Check permissions for write request
-            return obj.user == request.user
+            return obj == request.user
 
         """ 
             ~~~The custom method~~~

@@ -71,6 +71,7 @@ class PostListAPIView(ListAPIView):
     def get_queryset(self, *args, **kwargs):
         queryset_list = Post.objects.all()
         query = self.request.GET.get("q")
+        print("THE QUERY ===> ", query)
         if query:
             queryset_list = queryset_list.filter(
                 Q(title__icontains=query) |
@@ -78,4 +79,5 @@ class PostListAPIView(ListAPIView):
                 Q(user__first_name__icontains=query) |
                 Q(user__last_name__icontains=query)
             ).distinct()
+            print("THE QUERYSET", queryset_list)
         return queryset_list
